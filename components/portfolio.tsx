@@ -1,59 +1,69 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useMemo, useState } from "react"
+import { projects, projectFilters, type Project, type ProjectFilter } from "@/data/projects"
 import { PortfolioCard } from "./portfolio-card"
-
-const projects = [
-  {
-    title: "AMB Resume Builder",
-    description: "A premium, lightning-fast web utility engineered to craft professional-grade resumes.",
-    link: "https://ambresumebuilder.vercel.app",
-  },
-  {
-    title: "Fact Stack HQ",
-    description: "A powerful social media automation engine designed to programmatically generate and distribute high-retention infographic content.",
-    link: null,
-  },
-  {
-    title: "Enterprise POS Infrastructure",
-    description: "Standalone, secure point-of-sale software architectures built to streamline commercial operations.",
-    link: null,
-  },
-  {
-    title: "Media Automation Engines",
-    description: "Custom-compiled desktop applications tailored for high-fidelity, automated voice and video pipeline generation.",
-    link: null,
-  },
-]
+import { ProjectModal } from "./project-modal"
+import { SectionHeading } from "./section-heading"
 
 export function Portfolio() {
-  return (
-    <section id="portfolio" className="py-32 relative z-10">
-      {/* Section Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="mb-16"
-      >
-        <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-[0.1em] leading-tight bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent">
-          The Portfolio.
-        </h2>
-      </motion.div>
+  const [activeFilter, setActiveFilter] = useState<ProjectFilter>("ALL")
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const filteredProjects = useMemo(
+    () => activeFilter === "ALL" ? projects : projects.filter((project) => project.filters.includes(activeFilter)),
+    [activeFilter],
+  )
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-        {projects.map((project, index) => (
-          <PortfolioCard
-            key={project.title}
-            title={project.title}
-            description={project.description}
-            link={project.link}
-            index={index}
-          />
+  return (
+    <section id="portfolio" className="relative z-10 border-t border-[#2C353D] py-24 md:py-32">
+      <SectionHeading
+        eyebrow="THE PORTFOLIO"
+        title="Systems We've Engineered."
+        description="From business software to autonomous AI agents, every system begins with a real problem."
+      />
+
+      {/* Filter Buttons */}
+      <div className="mt-10 flex flex-wrap gap-2.5" aria-label="Project filters">
+        {projectFilters.map((filter) => (
+          <button
+            key={filter}
+            type="button"
+            onClick={() => setActiveFilter(filter)}
+            aria-pressed={activeFilter === filter}
+            className={`min-h-11 rounded-sm border px-5 py-2 text-xs md:text-sm font-semibold tracking-[0.16em] transition-all duration-300 ${
+              activeFilter === filter
+                ? "border-[#00E5FF] bg-[#00E5FF]/10 text-[#00E5FF] shadow-[0_0_15px_rgba(0,229,255,0.2)]"
+                : "border-[#2C353D] bg-[#1B1E23] text-[#E2E8F0]/70 hover:border-[#00E5FF]/50 hover:text-white"
+            }`}
+          >
+            {filter}
+          </button>
         ))}
       </div>
+
+      {/* Projects Grid with Center Breathing Divider Line */}
+      <div className="relative mt-10">
+        {/* Center Breathing Divider Line in Signature Turquoise */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-6 bottom-6 hidden -translate-x-1/2 w-[1px] bg-gradient-to-b from-transparent via-[#00E5FF]/40 to-transparent shadow-[0_0_16px_rgba(0,229,255,0.7)] animate-pulse md:block"
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {filteredProjects.map((project, index) => (
+            <PortfolioCard
+              key={project.title}
+              project={project}
+              index={index}
+              onView={setSelectedProject}
+            />
+          ))}
+        </div>
+      </div>
+
+      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
     </section>
   )
 }
+
+export default Portfolio

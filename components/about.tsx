@@ -1,18 +1,13 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, type Variants } from "framer-motion"
 
 const textLines = [
-  "At AMB Enterprise, we engineer sophisticated digital architecture.",
-  "From high-performance desktop applications in Python and C++",
-  "to seamless web automation, we bridge the gap between",
-  "complex infrastructure and elegant user experiences.",
-  "We are driven by a singular philosophy: precision, innovation,",
-  "and an uncompromising commitment to being your trustful",
-  "companion in the digital era.",
+  "AMB Enterprise is a technology-focused engineering studio building intelligent software, automation systems, and digital products for real-world workflows.",
+  "Our work spans AI agents, business software, automation engines, content systems, web applications, and desktop tools. We focus on turning complicated manual processes into structured, reliable software systems.",
 ]
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
@@ -22,7 +17,7 @@ const containerVariants = {
   },
 }
 
-const lineVariants = {
+const lineVariants: Variants = {
   hidden: { 
     y: 40, 
     opacity: 0 
@@ -39,7 +34,7 @@ const lineVariants = {
 
 export function About() {
   return (
-    <section id="about" className="py-32 relative z-10">
+    <section id="about" className="relative z-10 border-t border-[#2C353D] py-24 md:py-32">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
         {/* Left - Heading */}
         <motion.div
@@ -48,10 +43,8 @@ export function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-[0.1em] leading-tight bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent">
-            Engineering
-            <br />
-            Excellence.
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-[0.1em] leading-tight text-[#D4C5B0]">
+            Built Around Problems Worth Solving.
           </h2>
         </motion.div>
 
@@ -65,10 +58,10 @@ export function About() {
             className="overflow-hidden"
           >
             {textLines.map((line, index) => (
-              <div key={index} className="overflow-hidden">
+              <div key={index} className="overflow-hidden last:mt-6">
                 <motion.p
                   variants={lineVariants}
-                  className="text-[#D1D5DB] text-lg md:text-xl leading-relaxed font-sans"
+                  className="font-sans text-lg leading-relaxed text-[#E2E8F0]/80 md:text-xl"
                 >
                   {line}
                 </motion.p>
@@ -82,10 +75,10 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-10 flex items-center gap-4"
+            className="mt-12 flex items-center gap-5"
           >
-            <div className="h-[1px] w-16 bg-gradient-to-r from-[#BF953F] to-transparent" />
-            <span className="text-xs uppercase tracking-[0.2em] text-[#BF953F]/60">Est. 2024</span>
+            <div className="h-[1px] w-24 bg-gradient-to-r from-[#00A8B5] to-transparent" />
+            <span className="text-sm md:text-base font-semibold uppercase tracking-[0.2em] text-[#00A8B5]/80">AI • Automation • Software</span>
           </motion.div>
         </div>
       </div>

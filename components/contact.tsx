@@ -9,6 +9,7 @@ export function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    projectType: "",
     details: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -25,11 +26,12 @@ export function Contact() {
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            access_key: "dbe43312-8185-47da-8d92-e3dd43d03997",
+            access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "dbe43312-8185-47da-8d92-e3dd43d03997",
             name: formData.name,
             email: formData.email,
+            project_type: formData.projectType,
             message: formData.details,
-            subject: `New Lead from Portfolio: ${formData.name}`
+            subject: `New AMB Enterprise project inquiry: ${formData.name}`
         })
       });
 
@@ -37,12 +39,12 @@ export function Contact() {
         toast.success("Message Sent Successfully", {
           description: "Thank you for reaching out. We will be in touch soon.",
           style: {
-            background: '#0a0a0a',
-            border: '1px solid rgba(191,149,63,0.3)',
-            color: '#FCF6BA',
+            background: '#1B1E23',
+            border: '1px solid rgba(0,168,181,0.4)',
+            color: '#D4C5B0',
           }
         })
-        setFormData({ name: "", email: "", details: "" })
+        setFormData({ name: "", email: "", projectType: "", details: "" })
       } else {
         toast.error("Failed to send message", {
           description: "Please try again or email us directly.",
@@ -60,7 +62,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-32 border-t border-white/5 relative z-10">
+    <section id="contact" className="py-32 border-t border-[#2C353D] relative z-10">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
         {/* Left - Heading */}
         <motion.div
@@ -69,19 +71,17 @@ export function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-[0.1em] leading-tight bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent mb-6">
-            Start a
-            <br />
-            Conversation.
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-[0.1em] leading-tight text-[#D4C5B0] mb-6">
+            Let&apos;s Build Something Useful.
           </h2>
-          <p className="text-[#D1D5DB] text-lg leading-relaxed max-w-md">
-            Ready to elevate your digital presence? We&apos;re here to transform your vision into reality.
+          <p className="text-[#E2E8F0]/80 text-lg leading-relaxed max-w-md">
+            Tell us what you&apos;re trying to build. We&apos;ll turn the idea into an engineered system.
           </p>
 
-          <div className="mt-12 flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-gradient-to-r from-[#BF953F] to-transparent" />
-            <a href="mailto:asfyanzafar@gmail.com" className="text-sm tracking-[0.15em] uppercase text-[#FCF6BA] hover:text-white transition-colors duration-300">
-              asfyanzafar@gmail.com
+          <div className="mt-12 flex items-center gap-5">
+            <div className="h-[1px] w-20 bg-gradient-to-r from-[#00A8B5] to-transparent" />
+            <a href="mailto:ambenterpriseltd@gmail.com" className="text-base md:text-lg font-semibold tracking-[0.15em] uppercase text-[#D4C5B0] hover:text-[#00A8B5] transition-colors duration-300">
+              ambenterpriseltd@gmail.com
             </a>
           </div>
         </motion.div>
@@ -97,15 +97,16 @@ export function Contact() {
         >
           {/* Name Field */}
           <div className="group">
-            <label className="block text-xs uppercase tracking-[0.2em] text-[#A1A1AA]/60 mb-3">
+            <label htmlFor="contact-name" className="block text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-[#E2E8F0]/70 mb-3">
               Name
             </label>
             <input
               type="text"
+              id="contact-name"
               name="name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-transparent border-b border-white/20 pb-3 text-white text-lg focus:border-[#BF953F] focus:outline-none transition-colors duration-300 placeholder:text-[#A1A1AA]/30"
+              className="w-full bg-transparent border-b border-[#2C353D] pb-3 text-[#E2E8F0] text-lg focus:border-[#00A8B5] focus:outline-none transition-colors duration-300 placeholder:text-[#E2E8F0]/30"
               placeholder="John Doe"
               required
             />
@@ -113,31 +114,56 @@ export function Contact() {
 
           {/* Email Field */}
           <div className="group">
-            <label className="block text-xs uppercase tracking-[0.2em] text-[#A1A1AA]/60 mb-3">
+            <label htmlFor="contact-email" className="block text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-[#E2E8F0]/70 mb-3">
               Email
             </label>
             <input
               type="email"
+              id="contact-email"
               name="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-transparent border-b border-white/20 pb-3 text-white text-lg focus:border-[#BF953F] focus:outline-none transition-colors duration-300 placeholder:text-[#A1A1AA]/30"
+              className="w-full bg-transparent border-b border-[#2C353D] pb-3 text-[#E2E8F0] text-lg focus:border-[#00A8B5] focus:outline-none transition-colors duration-300 placeholder:text-[#E2E8F0]/30"
               placeholder="john@example.com"
               required
             />
           </div>
 
+          <div className="group">
+            <label htmlFor="project-type" className="block text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-[#E2E8F0]/70 mb-3">
+              Project Type
+            </label>
+            <select
+              id="project-type"
+              name="projectType"
+              value={formData.projectType}
+              onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+              className="w-full appearance-none rounded-none bg-transparent border-b border-[#2C353D] pb-3 text-lg text-[#E2E8F0] focus:border-[#00A8B5] focus:outline-none transition-colors duration-300"
+              required
+            >
+              <option value="" disabled className="bg-[#1B1E23]">Select a project type</option>
+              <option value="AI Agent" className="bg-[#1B1E23]">AI Agent</option>
+              <option value="Automation" className="bg-[#1B1E23]">Automation</option>
+              <option value="Business Software" className="bg-[#1B1E23]">Business Software</option>
+              <option value="Web Application" className="bg-[#1B1E23]">Web Application</option>
+              <option value="Desktop Software" className="bg-[#1B1E23]">Desktop Software</option>
+              <option value="Media Automation" className="bg-[#1B1E23]">Media Automation</option>
+              <option value="Other" className="bg-[#1B1E23]">Other</option>
+            </select>
+          </div>
+
           {/* Project Details Field */}
           <div className="group">
-            <label className="block text-xs uppercase tracking-[0.2em] text-[#A1A1AA]/60 mb-3">
-              Project Details
+            <label htmlFor="contact-message" className="block text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-[#E2E8F0]/70 mb-3">
+              Message
             </label>
             <textarea
               name="message"
+              id="contact-message"
               value={formData.details}
               onChange={(e) => setFormData({ ...formData, details: e.target.value })}
               rows={4}
-              className="w-full bg-transparent border-b border-white/20 pb-3 text-white text-lg focus:border-[#BF953F] focus:outline-none transition-colors duration-300 resize-none placeholder:text-[#A1A1AA]/30"
+              className="w-full bg-transparent border-b border-[#2C353D] pb-3 text-[#E2E8F0] text-lg focus:border-[#00A8B5] focus:outline-none transition-colors duration-300 resize-none placeholder:text-[#E2E8F0]/30"
               placeholder="Tell us about your project..."
               required
             />
@@ -146,7 +172,8 @@ export function Contact() {
           {/* Submit Button with Magnetic Effect */}
           <MagneticButton
             type="submit"
-            className={`mt-4 px-10 py-4 border border-[#BF953F] text-[#FCF6BA] text-sm tracking-[0.2em] uppercase transition-all duration-500 hover:bg-[#BF953F]/20 hover:shadow-[0_0_30px_rgba(191,149,63,0.3)] hover:text-white ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={isSubmitting}
+            className={`mt-6 rounded-sm px-14 py-5 border border-[#D4C5B0] bg-transparent text-[#D4C5B0] text-sm md:text-base font-semibold tracking-[0.2em] uppercase transition-all duration-500 hover:bg-[#D4C5B0] hover:text-[#0B0C0E] ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </MagneticButton>

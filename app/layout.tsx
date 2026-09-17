@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from 'sonner'
+import { MotionProvider } from '@/components/motion-provider'
 import './globals.css'
 
 const inter = Inter({ 
@@ -15,46 +16,51 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'AMB Enterprise | Your Trustful Companion',
-  description: 'Luxury software engineering studio specializing in sophisticated digital architecture, high-performance applications, and seamless web automation.',
-  generator: 'v0.app',
+  metadataBase: new URL('https://ambenterprise.com'),
+  title: 'AMB Enterprise — AI, Automation & Software Engineering',
+  description: 'AMB Enterprise engineers AI agents, automation systems, business software, web applications and intelligent digital products.',
   openGraph: {
-    title: 'AMB Enterprise | Your Trustful Companion',
-    description: 'Luxury software engineering studio specializing in sophisticated digital architecture, high-performance applications, and seamless web automation.',
+    title: 'AMB Enterprise — AI, Automation & Software Engineering',
+    description: 'AMB Enterprise engineers AI agents, automation systems, business software, web applications and intelligent digital products.',
     url: 'https://ambenterprise.com',
     siteName: 'AMB Enterprise',
-    images: [
-      {
-        url: '/og-image.jpg', // Placeholder for actual OG image
-        width: 1200,
-        height: 630,
-        alt: 'AMB Enterprise Portfolio',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/amb-logo.png',
+        width: 662,
+        height: 387,
+        alt: 'AMB Enterprise',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AMB Enterprise | Your Trustful Companion',
-    description: 'Luxury software engineering studio specializing in sophisticated digital architecture.',
+    title: 'AMB Enterprise — AI, Automation & Software Engineering',
+    description: 'AMB Enterprise engineers AI agents, automation systems, business software, web applications and intelligent digital products.',
+    images: ['/amb-logo.png'],
   },
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
+        url: '/favicon.png',
+        type: 'image/png',
+        sizes: '32x32',
       },
       {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
+        url: '/favicon.png',
+        type: 'image/png',
+        sizes: '64x64',
       },
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/favicon.png',
+        type: 'image/png',
+        sizes: '192x192',
       },
     ],
-    apple: '/apple-icon.png',
+    apple: '/favicon.png',
+    shortcut: '/favicon.png',
   },
 }
 
@@ -65,16 +71,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased bg-[#050505] text-white min-h-screen relative">
+      <body className="font-sans antialiased bg-[#0B0C0E] text-[#E2E8F0] min-h-screen relative">
         {/* Film Grain Overlay */}
         <div 
-          className="pointer-events-none fixed inset-0 z-50 opacity-[0.03]"
+          className="pointer-events-none fixed inset-0 z-50 opacity-[0.025] mix-blend-screen"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAABykmSrAAAAElBMVEUAAAAAAAAAAAAAAAAAAAAAAADgKxmiAAAABnRSTlMA//////8A701mAAAAJUlEQVQ4y2NgQAX8DIwsDIxQwsDAwMDICCVAMoxgwKcfhkEPAQAcWwMRvF8YHQAAAABJRU5ErkJggg==")`,
+            backgroundRepeat: 'repeat',
           }}
         />
-        {children}
-        <Toaster theme="dark" position="bottom-right" className="font-sans" />
+        <MotionProvider>{children}</MotionProvider>
+        <Toaster className="font-sans" position="bottom-right" theme="dark" />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

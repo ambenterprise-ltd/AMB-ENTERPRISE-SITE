@@ -1,82 +1,91 @@
-"use client";
+"use client"
 
-import { useRef } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { useRef } from "react"
+import { motion } from "framer-motion"
+import { ArrowUpRight } from "lucide-react"
+import type { Project } from "@/data/projects"
 
 interface PortfolioCardProps {
-  title: string;
-  description: string;
-  link: string | null;
-  index: number;
+  project: Project
+  index: number
+  onView: (project: Project) => void
 }
 
-export function PortfolioCard({ title, description, link, index }: PortfolioCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
+export function PortfolioCard({ project, index, onView }: PortfolioCardProps) {
+  const cardRef = useRef<HTMLElement>(null)
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    cardRef.current.style.setProperty("--mouse-x", `${x}px`);
-    cardRef.current.style.setProperty("--mouse-y", `${y}px`);
-  };
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    cardRef.current.style.setProperty("--mouse-x", `${x}px`)
+    cardRef.current.style.setProperty("--mouse-y", `${y}px`)
+  }
 
   return (
-    <motion.div
+    <motion.article
       ref={cardRef}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
-      className="portfolio-card group relative p-8 lg:p-10 rounded-xl transition-all duration-700 ease-out sm:hover:-translate-y-2"
+      className="portfolio-card group relative flex min-h-[19rem] flex-col rounded-sm border border-[#2C353D] bg-[#1B1E23] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#00E5FF]/50 hover:shadow-[0_10px_30px_rgba(0,229,255,0.12)] lg:p-8"
     >
-      {/* Animated conic border */}
-      <div className="absolute inset-0 rounded-xl overflow-hidden">
-        <div className="conic-border absolute inset-0 rounded-xl" />
-        <div className="absolute inset-[1px] rounded-xl bg-[#0a0a0a]" />
-      </div>
-
       {/* Mouse spotlight overlay */}
       <div 
-        className="absolute inset-0 rounded-xl opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: "radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(191,149,63,0.06), transparent 40%)",
+          background: "radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,229,255,0.06), transparent 45%)",
         }}
       />
 
       {/* Card content */}
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col h-full">
         {/* Project Number */}
-        <span className="absolute top-0 right-0 text-xs tracking-[0.2em] text-[#A1A1AA]/30 font-mono">
+        <span className="absolute top-0 right-0 text-sm tracking-[0.2em] text-[#94A3B8]/40 font-mono font-semibold">
           0{index + 1}
         </span>
 
-        {/* Project Title */}
-        <h3 className="font-serif text-xl md:text-2xl tracking-[0.05em] text-white mb-4 group-hover:text-[#FCF6BA] transition-colors duration-500">
-          {title}
-        </h3>
-
-        {/* Description */}
-        <p className="text-[#D1D5DB] text-sm md:text-base leading-relaxed mb-6">
-          {description}
+        <p className="pr-10 text-xs font-semibold tracking-[0.2em] text-[#00E5FF] uppercase">
+          {project.category}
         </p>
 
-        {/* Link */}
-        {link && (
-          <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[#BF953F] hover:text-[#FCF6BA] transition-colors duration-300"
+        <h3 className="mt-4 font-serif text-xl tracking-[0.05em] text-[#D4C5B0] transition-colors duration-300 group-hover:text-white md:text-2xl">
+          {project.title}
+        </h3>
+
+        <p className="mt-4 text-base leading-relaxed text-[#E2E8F0]/80">
+          {project.description}
+        </p>
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.technologies.slice(0, 4).map((technology) => (
+            <span
+              key={technology}
+              className="rounded-sm border border-[#2C353D] bg-[#0B0C0E]/70 px-3 py-1 text-xs font-medium tracking-[0.1em] text-[#E2E8F0]/70"
+            >
+              {technology}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-auto flex items-end justify-between gap-4 pt-7">
+          <span className="rounded-sm border border-[#00E5FF]/30 bg-[#00E5FF]/10 px-3 py-1.5 text-xs font-semibold tracking-[0.14em] text-[#00E5FF] shadow-[0_0_12px_rgba(0,229,255,0.2)]">
+            {project.status}
+          </span>
+          <button
+            type="button"
+            onClick={() => onView(project)}
+            className="inline-flex items-center gap-2 text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-[#D4C5B0] transition-all duration-300 hover:text-[#00E5FF] hover:translate-x-0.5"
           >
-            View Project
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
-        )}
+            View Project <ArrowUpRight className="h-4 w-4 md:h-5 md:w-5" />
+          </button>
+        </div>
       </div>
-    </motion.div>
-  );
+    </motion.article>
+  )
 }
+
+export default PortfolioCard
