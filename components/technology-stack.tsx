@@ -74,23 +74,20 @@ function MarqueeTrack({
   return (
     <div className="relative z-10 flex overflow-hidden select-none py-2.5">
       <div
-        className={`flex shrink-0 items-center gap-6 ${
-          reverse ? "animate-marquee-reverse" : "animate-marquee"
-        } hover:[animation-play-state:paused]`}
-        style={{
-          animationDuration: `${duration}s`,
-          willChange: "transform",
-        }}
+        className={`marquee-track flex w-max shrink-0 items-center gap-6 ${
+          reverse ? "animate-marquee-right" : "animate-marquee-left"
+        }`}
+        style={{ animationDuration: `${duration}s` }}
       >
         {repeated.map((item, idx) => {
           const Icon = item.icon
           return (
             <div
               key={`${item.name}-${idx}`}
-              className="inline-flex shrink-0 items-center gap-4 rounded-sm border border-[#2C353D] bg-[#1B1E23] px-8 py-4.5 md:py-5 transition-all duration-200 hover:scale-105 hover:border-[#00E5FF]/60 hover:bg-[#1B1E23] hover:shadow-[0_0_20px_rgba(0,229,255,0.2)] cursor-default"
+              className="inline-flex shrink-0 items-center gap-4 rounded-2xl border border-white/10 bg-[#0d0d0d] px-8 py-4 md:py-4.5 transition-all duration-200 hover:scale-105 hover:border-[#00E5FF]/60 hover:shadow-[0_0_25px_rgba(0,229,255,0.25)]"
             >
               <Icon className="h-6 w-6 shrink-0 text-[#00E5FF]" />
-              <span className="text-base md:text-lg font-semibold tracking-wide text-white/95">
+              <span className="text-base font-semibold tracking-wide text-white/95">
                 {item.name}
               </span>
             </div>
@@ -112,7 +109,7 @@ export function TechnologyStack() {
         <h2 className="font-serif text-4xl font-normal leading-tight text-[#D4C5B0] sm:text-5xl md:text-6xl">
           Technologies Behind the<br />Systems.
         </h2>
-        <p className="mt-4 max-w-2xl text-base text-[#E2E8F0]/80 md:text-lg">
+        <p className="mt-4 max-w-2xl text-base text-[#A1A1AA] md:text-lg">
           The tools, frameworks, and engineering disciplines used across AMB projects.
         </p>
       </div>
@@ -120,10 +117,10 @@ export function TechnologyStack() {
       {/* Marquee Rows with Zero-Cost Edge Fades */}
       <div className="relative z-10 flex flex-col gap-6 overflow-hidden">
         {/* Left Edge Fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 md:w-32 bg-gradient-to-r from-[#0B0C0E] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 md:w-36 bg-gradient-to-r from-[#0B0C0E] to-transparent" />
 
         {/* Right Edge Fade */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 md:w-32 bg-gradient-to-l from-[#0B0C0E] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 md:w-36 bg-gradient-to-l from-[#0B0C0E] to-transparent" />
 
         {/* Row 1: Left to Right */}
         <MarqueeTrack duration={32} items={row1} reverse={true} />
