@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import {
   Code2,
   Cpu,
@@ -36,7 +37,7 @@ const row1 = [
   { name: "React", icon: Code2 },
 ]
 
-// Row 2: Developer Tooling, Frameworks & Desktop Systems
+// Row 2: Engineering Tools, Backend & Infrastructure
 const row2 = [
   { name: "Git", icon: GitBranch },
   { name: "Node.js", icon: Cpu },
@@ -73,11 +74,20 @@ function MarqueeTrack({
 
   return (
     <div className="relative z-10 flex overflow-hidden select-none py-2.5">
-      <div
-        className={`marquee-track flex w-max shrink-0 items-center gap-6 ${
-          reverse ? "animate-marquee-right" : "animate-marquee-left"
-        }`}
-        style={{ animationDuration: `${duration}s` }}
+      <motion.div
+        className="flex w-max shrink-0 items-center gap-6"
+        animate={{
+          x: reverse ? ["-50%", "0%"] : ["0%", "-50%"],
+        }}
+        transition={{
+          x: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: duration,
+            ease: "linear",
+          },
+        }}
+        style={{ willChange: "transform" }}
       >
         {repeated.map((item, idx) => {
           const Icon = item.icon
@@ -93,7 +103,7 @@ function MarqueeTrack({
             </div>
           )
         })}
-      </div>
+      </motion.div>
     </div>
   )
 }

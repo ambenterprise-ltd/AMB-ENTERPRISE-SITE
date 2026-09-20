@@ -159,42 +159,6 @@ body {
   }
 }
 
-/* Hardware-Accelerated Infinite Marquee */
-@keyframes marquee-left {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@keyframes marquee-right {
-  0% {
-    transform: translate3d(-50%, 0, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.animate-marquee-left {
-  animation: marquee-left linear infinite;
-  will-change: transform;
-}
-
-.animate-marquee-right {
-  animation: marquee-right linear infinite;
-  will-change: transform;
-}
-
-/* Only pause on hover on devices that actually have a cursor (mouse), NEVER on touch devices */
-@media (hover: hover) and (pointer: fine) {
-  .marquee-track:hover {
-    animation-play-state: paused !important;
-  }
-}
-
 .site-shell::before {
   content: '';
   position: fixed;
@@ -210,15 +174,4 @@ body {
 section[id],
 main[id] {
   scroll-margin-top: 7.5rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }

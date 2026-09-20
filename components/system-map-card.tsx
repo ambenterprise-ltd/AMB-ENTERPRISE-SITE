@@ -4,6 +4,25 @@ import React, { useRef, useState, useEffect } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { Cpu, Braces, Workflow } from "lucide-react"
 
+function LaserConduit() {
+  return (
+    <div className="relative ml-9 h-7 w-[2px] overflow-hidden rounded-full bg-white/10">
+      <motion.div
+        className="absolute inset-x-0 h-3.5 w-full rounded-full bg-[#00E5FF] shadow-[0_0_10px_#00E5FF]"
+        animate={{
+          y: ["-100%", "200%"],
+          opacity: [0, 1, 1, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+    </div>
+  )
+}
+
 export function SystemMapCard() {
   const cardRef = useRef<HTMLDivElement>(null)
   const [canTilt, setCanTilt] = useState(false)
@@ -28,6 +47,7 @@ export function SystemMapCard() {
   }
 
   const handleMouseLeave = () => {
+    if (!canTilt) return
     mouseX.set(0)
     mouseY.set(0)
   }
@@ -36,8 +56,8 @@ export function SystemMapCard() {
     <div style={{ perspective: canTilt ? 1000 : "none" }} className="w-full">
       <motion.div
         ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseMove={canTilt ? handleMouseMove : undefined}
+        onMouseLeave={canTilt ? handleMouseLeave : undefined}
         style={{
           rotateX: canTilt ? rotateX : 0,
           rotateY: canTilt ? rotateY : 0,
@@ -58,7 +78,11 @@ export function SystemMapCard() {
             </span>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 px-3 py-1 text-[11px] font-medium tracking-wider text-[#00E5FF] shadow-[0_0_12px_rgba(0,229,255,0.3)]">
               LIVE PIPELINE
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
+              <motion.span
+                className="h-1.5 w-1.5 rounded-full bg-[#00E5FF] shadow-[0_0_8px_#00E5FF]"
+                animate={{ opacity: [0.3, 1, 0.3], scale: [0.85, 1.15, 0.85] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              />
             </div>
           </div>
 
@@ -78,10 +102,8 @@ export function SystemMapCard() {
               <span className="text-xs font-mono text-neutral-500">01</span>
             </div>
 
-            {/* Laser Line 1 */}
-            <div className="relative ml-9 h-6 w-[2px] bg-white/10">
-              <div className="absolute inset-x-0 h-3 w-[2px] rounded-full bg-[#00E5FF] shadow-[0_0_8px_#00E5FF] animate-pulse" />
-            </div>
+            {/* Traveling Laser Conduit 1 */}
+            <LaserConduit />
 
             {/* Step 2: ENGINEERING */}
             <div className="flex items-center justify-between rounded-xl border border-white/5 bg-[#121212] p-4 transition-all hover:border-[#00E5FF]/30">
@@ -97,10 +119,8 @@ export function SystemMapCard() {
               <span className="text-xs font-mono text-neutral-500">02</span>
             </div>
 
-            {/* Laser Line 2 */}
-            <div className="relative ml-9 h-6 w-[2px] bg-white/10">
-              <div className="absolute inset-x-0 h-3 w-[2px] rounded-full bg-[#00E5FF] shadow-[0_0_8px_#00E5FF] animate-pulse" />
-            </div>
+            {/* Traveling Laser Conduit 2 */}
+            <LaserConduit />
 
             {/* Step 3: OUTPUT */}
             <div className="flex items-center justify-between rounded-xl border border-white/5 bg-[#121212] p-4 transition-all hover:border-[#00E5FF]/30">
