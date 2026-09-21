@@ -78,6 +78,7 @@ export function PortfolioCard({ project, index, onView }: PortfolioCardProps) {
           <button
             type="button"
             onClick={() => onView(project)}
+            aria-label={`View details for ${project.title}`}
             className="inline-flex items-center gap-2 text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-[#D4C5B0] transition-all duration-300 hover:text-[#00E5FF] hover:translate-x-0.5"
           >
             View Project <ArrowUpRight className="h-4 w-4 md:h-5 md:w-5" />
