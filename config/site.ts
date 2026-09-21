@@ -2,7 +2,11 @@ export const siteConfig = {
   name: "AMB Enterprise Ltd",
   description:
     "Official portal of AMB Enterprise Ltd - business software, enterprise solutions, and management services.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://ambenterpriseltd.vercel.app",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://amb-enterprise.vercel.app"),
   ogImage: "/og.png",
   links: {
     twitter: "https://twitter.com",
