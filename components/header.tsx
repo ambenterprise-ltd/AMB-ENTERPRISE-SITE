@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { AMBLogo } from "@/components/amb-logo"
+import { STAFF_LOGIN_URL } from "@/config/site"
 
 const navLinks = [
   { name: "Systems", href: "#systems" },
@@ -61,7 +62,7 @@ export function Header() {
             </a>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center gap-8 lg:gap-12 xl:gap-16">
+            <div className="hidden md:flex items-center gap-6 lg:gap-8 xl:gap-10">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -71,6 +72,15 @@ export function Header() {
                   {link.name}
                 </a>
               ))}
+
+              <a
+                href={STAFF_LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded px-3.5 py-1.5 text-[11px] lg:text-xs font-medium tracking-[0.15em] uppercase text-[#E2E8F0]/70 border border-[#2C353D] hover:border-[#00A8B5]/50 hover:text-[#00A8B5] hover:bg-[#00A8B5]/5 transition-all duration-300"
+              >
+                Staff Login
+              </a>
             </div>
 
             {/* Mobile Menu Toggle Button */}
@@ -126,12 +136,25 @@ export function Header() {
                   {link.name}
                 </motion.a>
               ))}
+
+              <motion.a
+                href={STAFF_LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: navLinks.length * 0.1 + 0.2 }}
+                className="text-sm font-medium tracking-[0.2em] uppercase text-[#E2E8F0]/70 px-4 py-2 rounded border border-[#2C353D] hover:border-[#00A8B5]/50 hover:text-[#00A8B5] transition-all duration-300"
+              >
+                Staff Login
+              </motion.a>
               
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.6 }}
-                className="mt-12 w-12 h-[1px] bg-gradient-to-r from-transparent via-[#00A8B5]/50 to-transparent"
+                className="mt-6 w-12 h-[1px] bg-gradient-to-r from-transparent via-[#00A8B5]/50 to-transparent"
               />
             </div>
           </motion.div>

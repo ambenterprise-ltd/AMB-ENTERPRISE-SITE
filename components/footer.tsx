@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { AMBLogo } from "@/components/amb-logo"
+import { STAFF_LOGIN_URL } from "@/config/site"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -26,10 +27,21 @@ export function Footer() {
           </p>
         </div>
 
-        {/* Right - Copyright */}
-        <p className="text-xs md:text-sm text-[#E2E8F0]/60 tracking-[0.15em] uppercase text-center md:text-right">
-          © {currentYear} A Product Of AMB Enterprise.<br className="hidden md:block" /> All rights reserved.
-        </p>
+        {/* Right - Copyright & Staff Login */}
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-xs md:text-sm text-[#E2E8F0]/60 tracking-[0.15em] uppercase text-center md:text-right">
+          <p>
+            © {currentYear} A Product Of AMB Enterprise. All rights reserved.
+          </p>
+          <span className="hidden sm:inline text-[#2C353D]">•</span>
+          <a
+            href={STAFF_LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#E2E8F0]/50 hover:text-[#00A8B5] transition-colors duration-300"
+          >
+            Staff Login
+          </a>
+        </div>
       </div>
     </motion.footer>
   )

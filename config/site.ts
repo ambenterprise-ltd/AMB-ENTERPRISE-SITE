@@ -12,6 +12,9 @@ export const siteConfig = {
     twitter: "https://twitter.com",
     linkedin: "https://linkedin.com",
     github: "https://github.com/ambenterprise-ltd",
+    staffLogin:
+      process.env.NEXT_PUBLIC_STAFF_LOGIN_URL ||
+      "https://amb-attendance-app.vercel.app/login",
   },
   keywords: [
     "AMB Enterprise Ltd",
@@ -36,3 +39,5 @@ export function absoluteUrl(path: string = ''): string {
 }
 
 export type SiteConfig = typeof siteConfig
+
+export const STAFF_LOGIN_URL = siteConfig.links.staffLogin
